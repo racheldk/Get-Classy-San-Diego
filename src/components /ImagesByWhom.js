@@ -7,6 +7,7 @@ export default function ImagesByWhom({ artworkIDList, quizTitle }) {
     const [quizIndex, setQuizIndex] = useState(0);
     const [questionStatus, setQuestionStatus] = useState('unanswered')
     const [answerStatus, setAnswerStatus] = useState(null)
+    const [score, setScore] = useState(0)
 
     useEffect(() => {
         let imageRequests = [];
@@ -54,6 +55,7 @@ export default function ImagesByWhom({ artworkIDList, quizTitle }) {
         console.log(artist_id)
         if (artist_id === artwork.artist_id) {
             console.log('correct!')
+            setScore(score+1)
             setAnswerStatus('correct')
         } else {
             console.log('nope, incorrect')
@@ -72,8 +74,9 @@ export default function ImagesByWhom({ artworkIDList, quizTitle }) {
         <>
             <h2>Quiz</h2>
             <h3>{quizTitle}</h3>
-            {artworkList.length>0 && 
+            {artworkList.length>0 && quizIndex<(artworkIDList.length -1) &&
             <div>
+                <div>Score: {score}</div>
                 <img
                     src={`https://www.artic.edu/iiif/2/${artworkList[quizIndex].image_id}/full/843,/0/default.jpg`}
                     alt={artworkList[quizIndex].thumbnail.alt_text}
@@ -101,24 +104,12 @@ export default function ImagesByWhom({ artworkIDList, quizTitle }) {
                     </>
                 )}
             </div>
-            
-            
             }
-            {/* {artworkList.map((artwork) => (
-                <div>
-                    <img
-                        src={`https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`}
-                        alt={artwork.thumbnail.alt_text}
-                    ></img>
-                    <p>Artwork id: {artwork.id}</p>
-                    <p>Title: {artwork.title}</p>
-                    <p>by: {artwork.artist_title}</p>
-                    <p>
-                        public domain:{" "}
-                        {artwork.is_public_domain ? "yes" : "NOOOOOOOO"}
-                    </p>
-                </div>
-            ))} */}
+
+            {quizIndex>=artworkList.length && 
+            <div>quiz over {quizIndex}</div>
+            }
+
         </>
     );
 }
