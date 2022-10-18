@@ -27,7 +27,9 @@ export default function ImagesByWhom({ artworkIDList, quizTitle }) {
                 } 
             })
             console.log(imageResponses)
-            setArtworkList(imageResponses)
+            const sortedImageResponses = imageResponses.sort((a,b)=>{return a.id-b.id})
+            console.log(sortedImageResponses)
+            setArtworkList(sortedImageResponses)
         }))
     }, []);
 
@@ -37,7 +39,7 @@ export default function ImagesByWhom({ artworkIDList, quizTitle }) {
             <h3>{quizTitle}</h3>
             {artworkList.map((artwork)=>
             <div> 
-                {/* <p>Artwork id: {artwork.id}</p> */}
+                <p>Artwork id: {artwork.id}</p>
                 <p>Title: {artwork.title}</p>
                 <p>by: {artwork.artist_title}</p>
                 <p>public domain: {artwork.is_public_domain ? ("yes"):("NOOOOOOOO")}</p>
