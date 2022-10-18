@@ -7,25 +7,129 @@ export default function ExhibitionList() {
     const [artURLs, setArtURLs] = useState([]);
     const [IIIFResults, setIIIFResults] = useState();
     const [imageURL, setImageURL] = useState();
+    const [worksByAgent, setWorksByAgent] = useState([])
+
+    // useEffect(() => {
+    //     axios
+    //         .get("https://api.artic.edu/api/v1/exhibitions?limit=4&include=artworks", {})
+    //         .then((res) => {
+    //             console.log(res.data);
+    //             let hasArtworkListed = [];
+    //             for (let exhibition of res.data.data) {
+    //                 if (exhibition.artwork_ids.length > 0) {
+    //                     hasArtworkListed.push(exhibition);
+    //                 }
+    //             }
+    //             setExhibitionList(hasArtworkListed);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             alert(error.message);
+    //         });
+    // }, []);
+
+
+
+    // useEffect(() => {
+    //     axios
+    //         .get("https://api.artic.edu/api/v1/sections?limit=4", {})
+    //         .then((res) => {
+    //             console.log(res.data);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             alert(error.message);
+    //         });
+    // }, []);
+
+    // useEffect(() => {
+    //     axios
+    //         .get("https://api.artic.edu/api/v1/agents?limit=8&fields=id,title,is_artist,artwork_ids", {})
+    //         .then((res) => {
+    //             console.log(res.data.data);
+    //             let artists = []
+    //             for (let agent of res.data.data) {
+    //                 if (agent.is_artist === true){
+    //                     console.log('found an artist!' + agent.title)
+    //                     artists.push(agent)
+    //                 }
+    //             }
+    //             let withArtworksListed = []
+    //             for (let agent of res.data.data) {
+    //                 if (agent.artwork_ids>0) {
+    //                     withArtworksListed.push(agent)
+    //                 }
+    //             }
+    //             console.log(withArtworksListed)
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             alert(error.message);
+    //         });
+    // }, []);
 
     useEffect(() => {
         axios
-            .get("https://api.artic.edu/api/v1/exhibitions", {})
+            .get("https://api.artic.edu/api/v1/agents/35809", {})
             .then((res) => {
-                console.log(res.data.data);
-                let hasArtworkListed = [];
-                for (let exhibition of res.data.data) {
-                    if (exhibition.artwork_ids.length > 0) {
-                        hasArtworkListed.push(exhibition);
-                    }
-                }
-                setExhibitionList(hasArtworkListed);
+                console.log(res.data);
             })
             .catch((error) => {
                 console.log(error);
                 alert(error.message);
             });
     }, []);
+
+    useEffect(() => {
+        axios
+            .get("https://api.artic.edu/api/v1/artworks/search?q=o'keefe", {})
+            .then((res) => {
+                console.log(res.data);
+                setWorksByAgent(res.data.data)
+            })
+            .catch((error) => {
+                console.log(error);
+                alert(error.message);
+            });
+    }, []);
+    
+
+    // useEffect(() => {
+    //     axios
+    //         .get("https://api.artic.edu/api/v1/category-terms?limit=2", {})
+    //         .then((res) => {
+    //             console.log(res.data);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             alert(error.message);
+    //         });
+    // }, []);
+
+    // useEffect(() => {
+    //     axios
+    //         .get("https://api.artic.edu/api/v1/catalogues?limit=2", {})
+    //         .then((res) => {
+    //             console.log(res.data);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             alert(error.message);
+    //         });
+    // }, []);
+    // 404 error 
+
+    // useEffect(() => {
+    //     axios
+    //         .get("https://api.artic.edu/api/v1/artwork-types?limit=4", {})
+    //         .then((res) => {
+    //             console.log(res.data);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             alert(error.message);
+    //         });
+    // }, []);
 
     const handleExhibitionClick = (exhibition) => {
         console.log(exhibition);
@@ -60,7 +164,7 @@ export default function ExhibitionList() {
     return (
         <>
             <h2>Exhibition List</h2>
-            {exhibitionList.map((exhibition) => (
+            {/* {exhibitionList.map((exhibition) => (
                 <button
                     key={exhibition.id}
                     onClick={() => handleExhibitionClick(exhibition)}
@@ -68,7 +172,14 @@ export default function ExhibitionList() {
                     {exhibition.title}
                 </button>
             ))}
-            {imageURL && <img src={imageURL} alt="artwork" />}
+            {imageURL && <img src={imageURL} alt="artwork" />} */}
+
+            {worksByAgent && worksByAgent.map((work) =>(
+                <div key={work.id}>
+                <p>{work.title}</p>
+                <img src={work.thumbnail.lqip} alt={work.alt_text} height="100px"></img>
+                </div>
+            ))}
         </>
     );
 }
