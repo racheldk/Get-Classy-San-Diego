@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import axios from "axios";
 import ImagesByWhom from "./ImagesByWhom";
+import { Typography, Button } from "@mui/material";
 
 export default function ByWhom({artworkIDList, setArtworkIDList, setQuizTitle, quizTitle}) {
 
@@ -52,12 +53,11 @@ export default function ByWhom({artworkIDList, setArtworkIDList, setQuizTitle, q
             <ImagesByWhom artworkIDList={artworkIDList} quizTitle={quizTitle}/>
         ):(
             <>
-            <h2>Wait, who did this?</h2>
-            <button onClick={() => handleManetMonetClick()}>
+            <Typography variant="h3">Wait, who did this?</Typography>
+            <Button size="large" variant="contained" onClick={() => handleManetMonetClick()}>
                 Manet or Monet
-            </button>
-            <button>another quiz</button>
-            <button>yet another quiz</button></>
+            </Button>
+            </>
         )}
             
         </>

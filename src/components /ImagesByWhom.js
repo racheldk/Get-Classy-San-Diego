@@ -1,6 +1,7 @@
-import { useEffect, useState, Button } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Confetti from "react-confetti";
+import { Paper, Box, Button, Container, Typography } from "@mui/material";
 
 export default function ImagesByWhom({ artworkIDList, quizTitle }) {
     const [artworkList, setArtworkList] = useState([]);
@@ -72,57 +73,90 @@ export default function ImagesByWhom({ artworkIDList, quizTitle }) {
 
     return (
         <>
-            <h2>Quiz</h2>
-            <h3>{quizTitle}</h3>
+            <Typography variant="h3">Quiz</Typography>
+            <Typography variant="h4">{quizTitle}</Typography>
             {artworkList.length > 0 && quizIndex < artworkIDList.length - 1 ? (
                 <div>
-                    <div>Score: {score}</div>
-                    <img
-                        src={`https://www.artic.edu/iiif/2/${artworkList[quizIndex].image_id}/full/843,/0/default.jpg`}
-                        alt={artworkList[quizIndex].thumbnail.alt_text}
-                        className="artwork"
-                    ></img>
-                    {questionStatus === "unanswered" ? (
-                        <>
-                            <button
-                                onClick={() =>
-                                    handleAnswer(artworkList[quizIndex], 35577)
-                                }
-                            >
-                                Manet
-                            </button>
-                            <button
-                                onClick={() =>
-                                    handleAnswer(artworkList[quizIndex], 35809)
-                                }
-                            >
-                                Monet
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            {answerStatus === "correct" ? (
-                                <Confetti />
-                            ) : (
-                                <p>incorrect</p>
-                            )}
-                            <p>index: {quizIndex}</p>
-                            <p>title: {artworkList[quizIndex].title}</p>
-                            <p>artist: {artworkList[quizIndex].artist_title}</p>
-                            <p>date: {artworkList[quizIndex].date_display}</p>
-                            <p>
-                                type:{" "}
-                                {artworkList[quizIndex].artwork_type_title}
-                            </p>
-                            <p>
-                                materials:{" "}
-                                {artworkList[quizIndex].material_titles}
-                            </p>
-                            <button onClick={() => handleNext()}>
-                                Next Question
-                            </button>
-                        </>
-                    )}
+                    <Container>
+                        <Typography>Score: {score}</Typography>
+                    </Container>
+                    <Paper>
+                        <Container>
+                            <img
+                                src={`https://www.artic.edu/iiif/2/${artworkList[quizIndex].image_id}/full/843,/0/default.jpg`}
+                                alt={artworkList[quizIndex].thumbnail.alt_text}
+                                className="artwork"
+                            ></img>
+                        </Container>
+                        {questionStatus === "unanswered" ? (
+                            <Container>
+                                <Button
+                                    variant="outlined"
+                                    onClick={() => {
+                                        handleAnswer(
+                                            artworkList[quizIndex],
+                                            35577
+                                        );
+                                    }}
+                                >
+                                    Manet
+                                </Button>
+                                <Button
+                                    variant="outlined"
+                                    onClick={() =>
+                                        handleAnswer(
+                                            artworkList[quizIndex],
+                                            35809
+                                        )
+                                    }
+                                >
+                                    Monet
+                                </Button>
+                            </Container>
+                        ) : (
+                            <>
+                                {answerStatus === "correct" ? (
+                                    <Confetti />
+                                ) : (
+                                    <Typography>incorrect</Typography>
+                                )}
+                                <Container>
+                                    <Typography>index: {quizIndex}</Typography>
+                                    <Typography>
+                                        title: {artworkList[quizIndex].title}
+                                    </Typography>
+                                    <Typography>
+                                        artist:{" "}
+                                        {artworkList[quizIndex].artist_title}
+                                    </Typography>
+                                    <Typography>
+                                        date:{" "}
+                                        {
+                                            artworkList[quizIndex]
+                                                .date_disTypographylay
+                                        }
+                                    </Typography>
+                                    <Typography>
+                                        type:{" "}
+                                        {
+                                            artworkList[quizIndex]
+                                                .artwork_tyTypographye_title
+                                        }
+                                    </Typography>
+                                    <Typography>
+                                        materials:{" "}
+                                        {artworkList[quizIndex].material_titles}
+                                    </Typography>
+                                    <Button
+                                        variant="outlined"
+                                        onClick={() => handleNext()}
+                                    >
+                                        Next Question
+                                    </Button>
+                                </Container>
+                            </>
+                        )}
+                    </Paper>
                 </div>
             ) : (
                 quizIndex >= artworkList.length && (

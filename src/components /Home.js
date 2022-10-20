@@ -1,5 +1,5 @@
 import { Navigate, useNavigate } from "react-router"
-import { Container, Button } from '@mui/material';
+import { Container, Button, Typography } from '@mui/material';
 
 export default function Home() {
     const navigate = useNavigate()
@@ -8,9 +8,9 @@ export default function Home() {
     return(
         <>  
         <Container className="header">
-            <h1>Get Classy</h1></Container>
-    <Button variant="contained" color="#A8273D"  onClick={()=>navigate('exhibitions')}>I want to see exhibitions</Button>
-    <Button variant="contained" onClick={()=>navigate('bywhom')}  >Quiz me!</Button>
+            <Typography variant="h1">Get Classy</Typography></Container>
+    <Button variant="outlined"  onClick={()=>navigate('exhibitions')}>I want to see exhibitions</Button>
+    <Button variant="contained"  color="secondary"onClick={()=>navigate('bywhom')}  >Quiz me!</Button>
         </>
     )
 }

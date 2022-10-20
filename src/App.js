@@ -5,12 +5,29 @@ import ByWhom from "./components /ByWhom";
 import Home from "./components /Home";
 import ImagesByWhom from "./components /ImagesByWhom";
 import { useState } from "react";
+import {createTheme, ThemeProvider } from '@mui/material'
+import { yellow } from "@mui/material/colors";
 
 function App() {
     const [artworkIDList, setArtworkIDList] = useState([]);
     const [quizTitle, setQuizTitle] = useState("");
 
+    const theme = createTheme({
+      palette: {
+        primary: {
+          main: '#a8273D'
+        },
+        secondary: {
+          main:"#E8B71D" 
+        }
+      }, 
+      typography: {
+        fontFamily: 'Quicksand'
+      }
+    })
+
     return (
+      <ThemeProvider theme={theme}>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -38,6 +55,7 @@ function App() {
                 </Route>
             </Routes>
         </BrowserRouter>
+      </ThemeProvider>
     );
 }
 
