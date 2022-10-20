@@ -3,3 +3,13 @@
   border: 5px green solid;
   padding: 10px;
 }
+
+body {
+  background-color: #F1f5f9;
+}
+
+
+.header {
+  border: 4px pink solid;
+  background-color: #DAE4EF;
+}

@@ -5,9 +5,9 @@ import Confetti from "react-confetti";
 export default function ImagesByWhom({ artworkIDList, quizTitle }) {
     const [artworkList, setArtworkList] = useState([]);
     const [quizIndex, setQuizIndex] = useState(0);
-    const [questionStatus, setQuestionStatus] = useState('unanswered')
-    const [answerStatus, setAnswerStatus] = useState(null)
-    const [score, setScore] = useState(0)
+    const [questionStatus, setQuestionStatus] = useState("unanswered");
+    const [answerStatus, setAnswerStatus] = useState(null);
+    const [score, setScore] = useState(0);
 
     useEffect(() => {
         let imageRequests = [];
@@ -50,66 +50,85 @@ export default function ImagesByWhom({ artworkIDList, quizTitle }) {
             });
     }, []);
 
-    const handleAnswer = (artwork, artist_id) =>{
-        console.log(artwork)
-        console.log(artist_id)
+    const handleAnswer = (artwork, artist_id) => {
+        console.log(artwork);
+        console.log(artist_id);
         if (artist_id === artwork.artist_id) {
-            console.log('correct!')
-            setScore(score+1)
-            setAnswerStatus('correct')
+            console.log("correct!");
+            setScore(score + 1);
+            setAnswerStatus("correct");
         } else {
-            console.log('nope, incorrect')
-            setAnswerStatus('incorrect')
+            console.log("nope, incorrect");
+            setAnswerStatus("incorrect");
         }
-        setQuestionStatus('answered')
-    }
+        setQuestionStatus("answered");
+    };
 
-    const handleNext = () =>{
-        setAnswerStatus(null)
-        setQuestionStatus('unanswered')
-        setQuizIndex(quizIndex+1)
-    }
+    const handleNext = () => {
+        setAnswerStatus(null);
+        setQuestionStatus("unanswered");
+        setQuizIndex(quizIndex + 1);
+    };
 
     return (
         <>
             <h2>Quiz</h2>
             <h3>{quizTitle}</h3>
-            {artworkList.length>0 && quizIndex<(artworkIDList.length -1) &&
-            <div>
-                <div>Score: {score}</div>
-                <img
-                    src={`https://www.artic.edu/iiif/2/${artworkList[quizIndex].image_id}/full/843,/0/default.jpg`}
-                    alt={artworkList[quizIndex].thumbnail.alt_text}
-                    className="artwork"
-                ></img>
-                {questionStatus==='unanswered' ? (
-                    <>
-                    <button onClick={()=>handleAnswer(artworkList[quizIndex], 35577)} >Manet</button>
-                    <button onClick={()=>handleAnswer(artworkList[quizIndex], 35809)} >Monet</button>
-                    </>
-                ): (
-                    <>
-                    {answerStatus==='correct' ? (
-                        <Confetti/>
-                    ):(
-                        <p>incorrect</p>
+            {artworkList.length > 0 && quizIndex < artworkIDList.length - 1 ? (
+                <div>
+                    <div>Score: {score}</div>
+                    <img
+                        src={`https://www.artic.edu/iiif/2/${artworkList[quizIndex].image_id}/full/843,/0/default.jpg`}
+                        alt={artworkList[quizIndex].thumbnail.alt_text}
+                        className="artwork"
+                    ></img>
+                    {questionStatus === "unanswered" ? (
+                        <>
+                            <button
+                                onClick={() =>
+                                    handleAnswer(artworkList[quizIndex], 35577)
+                                }
+                            >
+                                Manet
+                            </button>
+                            <button
+                                onClick={() =>
+                                    handleAnswer(artworkList[quizIndex], 35809)
+                                }
+                            >
+                                Monet
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            {answerStatus === "correct" ? (
+                                <Confetti />
+                            ) : (
+                                <p>incorrect</p>
+                            )}
+                            <p>index: {quizIndex}</p>
+                            <p>title: {artworkList[quizIndex].title}</p>
+                            <p>artist: {artworkList[quizIndex].artist_title}</p>
+                            <p>date: {artworkList[quizIndex].date_display}</p>
+                            <p>
+                                type:{" "}
+                                {artworkList[quizIndex].artwork_type_title}
+                            </p>
+                            <p>
+                                materials:{" "}
+                                {artworkList[quizIndex].material_titles}
+                            </p>
+                            <button onClick={() => handleNext()}>
+                                Next Question
+                            </button>
+                        </>
                     )}
-                    <p>index: {quizIndex}</p>
-                    <p>title: {artworkList[quizIndex].title}</p>
-                    <p>artist: {artworkList[quizIndex].artist_title}</p>
-                    <p>date: {artworkList[quizIndex].date_display}</p>
-                    <p>type: {artworkList[quizIndex].artwork_type_title}</p>
-                    <p>materials: {artworkList[quizIndex].material_titles}</p>
-                    <button onClick={()=>handleNext()}  >Next Question</button>
-                    </>
-                )}
-            </div>
-            }
-
-            {quizIndex>=artworkList.length && 
-            <div>quiz over {quizIndex}</div>
-            }
-
+                </div>
+            ) : (
+                quizIndex >= artworkList.length && (
+                    <div>quiz over {quizIndex}</div>
+                )
+            )}
         </>
     );
 }
